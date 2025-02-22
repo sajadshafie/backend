@@ -12,7 +12,7 @@ function generateToken(user) {
       id: user.id,
       email: user.email,
     },
-    "12345",
+    "18336574",
     {
       expiresIn: "24h",
     }
@@ -25,15 +25,18 @@ router.post("/", upload.none(), async (req, res) => {
     WHERE phone_number=$1`;
     const result = await db.query(query, [phone_number]);
     const user = result.rows[0];
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      result.rows[0].password
-    );
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: "Invalid password" });
+    if (!user) {
+      return res
+        .status(401)
+        .json({ error: "کلمه عبور یا نام کاربری نا معتبر" });
     }
-    
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ error: "کلمه عبور یا نام کاربری نا معتبر" });
+    }
+
     const token = generateToken(user);
     res.status(200).json({
       message: "user login successfully",
@@ -46,6 +49,7 @@ router.post("/", upload.none(), async (req, res) => {
       },
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
