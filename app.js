@@ -10,6 +10,8 @@ var register = require("./routes/user/register");
 var userUpdate = require("./routes/user/update");
 var userDelete = require("./routes/user/delete");
 var login = require("./routes/user/login");
+var mediaUpload = require("./routes/upload/upload_music");
+var getImage = require("./routes/upload/images");
 var app = express();
 
 // view engine setup
@@ -28,6 +30,8 @@ app.use("/register", register);
 app.use("/users/update", userUpdate);
 app.use("/users/delete", userDelete);
 app.use("/login", login);
+app.use("/upload", mediaUpload);
+app.use("/image", getImage);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
