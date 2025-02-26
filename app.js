@@ -10,7 +10,7 @@ var register = require("./routes/user/register");
 var userUpdate = require("./routes/user/update");
 var userDelete = require("./routes/user/delete");
 var login = require("./routes/user/login");
-var mediaUpload = require("./routes/upload/upload_music");
+var mediaUpload = require("./routes/upload/upload_image");
 var getImage = require("./routes/upload/images");
 var app = express();
 
@@ -32,6 +32,7 @@ app.use("/users/delete", userDelete);
 app.use("/login", login);
 app.use("/upload", mediaUpload);
 app.use("/image", getImage);
+app.use('/uploads', express.static('uploads'));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

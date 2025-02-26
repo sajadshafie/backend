@@ -13,7 +13,10 @@ router.get("/:id", async (req, res) => {
     console.log(result.rows[0]);
     if (result.rows.length > 0) {
       res.setHeader("Content-Type", "image/jpeg");
-      res.send(result.rows[0].image_data);
+      res.send({
+        message: "دریافت عکس موفقیت امیز",
+        image: result.rows[0].image_data,
+      });
     } else {
       res.status(404).send("Image not found");
     }
