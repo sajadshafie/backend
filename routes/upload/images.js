@@ -8,14 +8,14 @@ const db = require("../../db/db");
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const query = `SELECT image_data FROM media WHERE id=$1`;
+    const query = `SELECT url FROM media 
+    WHERE id=$1`;
     const result = await db.query(query, [id]);
     console.log(result.rows[0]);
     if (result.rows.length > 0) {
-      res.setHeader("Content-Type", "image/jpeg");
       res.send({
         message: "دریافت عکس موفقیت امیز",
-        image: result.rows[0].image_data,
+        image: result.rows[0].url,
       });
     } else {
       res.status(404).send("Image not found");
